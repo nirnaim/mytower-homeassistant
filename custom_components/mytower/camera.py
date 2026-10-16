@@ -2,6 +2,10 @@
 from __future__ import annotations
 
 from homeassistant.components.camera import Camera, CameraEntityFeature
+from homeassistant.components.stream import (
+    CONF_RTSP_TRANSPORT,
+    CONF_USE_WALLCLOCK_AS_TIMESTAMPS,
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
@@ -34,6 +38,13 @@ class MyTowerCamera(MyTowerEntity, Camera):
         self._camera = camera
         self._attr_name = camera.name
         self._attr_unique_id = f"{coordinator.entry.entry_id}_{camera.mac}_cam"
+        # Akuvox door stations only serve RTSP reliably over TCP; the default
+        # UDP transport yields "Invalid data found when processing input".
+        # Wall-clock timestamps avoid broken PTS from the intercom encoder.
+        self.stream_options = {
+            CONF_RTSP_TRANSPORT: "tcp",
+            CONF_USE_WALLCLOCK_AS_TIMESTAMPS: True,
+        }
 
     async def stream_source(self) -> str | None:
         """Return the current RTSP URL (credentials refresh with the token)."""
