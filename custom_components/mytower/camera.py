@@ -38,11 +38,12 @@ class MyTowerCamera(MyTowerEntity, Camera):
         self._camera = camera
         self._attr_name = camera.name
         self._attr_unique_id = f"{coordinator.entry.entry_id}_{camera.mac}_cam"
-        # Akuvox door stations only serve RTSP reliably over TCP; the default
-        # UDP transport yields "Invalid data found when processing input".
-        # Wall-clock timestamps avoid broken PTS from the intercom encoder.
+        # Akuvox door stations serve this RTSP feed over UDP only; forcing TCP
+        # (or letting the stream worker default to it) yields "Invalid data
+        # found when processing input". Wall-clock timestamps smooth the
+        # intercom encoder's irregular PTS.
         self.stream_options = {
-            CONF_RTSP_TRANSPORT: "tcp",
+            CONF_RTSP_TRANSPORT: "udp",
             CONF_USE_WALLCLOCK_AS_TIMESTAMPS: True,
         }
 
