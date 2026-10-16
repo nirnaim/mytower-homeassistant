@@ -32,6 +32,15 @@ AKUVOX_OPENDOOR_PATH = "opendoor"
 AKUVOX_OPENDOOR_API_VERSION = "4.3"
 AKUVOX_RTSP_PORT = 554
 
+# --- PubNub (intercom ring notifications) -----------------------------------
+# The app subscribes to these to learn about intercom rings. Read-only pub/sub,
+# so it never conflicts with the phone's SIP registration. The subscribe key is
+# the Akuvox app's shared key (not a per-user secret); channels are per account.
+PUBNUB_ORIGIN = "ps.pndsn.com"
+PUBNUB_SUBKEY = "sub-c-ec883260-41bf-11e6-9baf-0619f8945a4f"
+
+EVENT_INTERCOM_RING = "mytower_intercom_ring"
+
 # --- Config entry keys ------------------------------------------------------
 CONF_DEVICE_TOKEN = "device_token"  # the app's mt-mobile token
 CONF_USER_ID = "user_id"            # numeric MyTower/Akuvox account id

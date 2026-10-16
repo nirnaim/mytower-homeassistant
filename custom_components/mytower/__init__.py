@@ -12,17 +12,24 @@ from .services import async_register_services, async_unload_services
 type MyTowerConfigEntry = ConfigEntry[MyTowerCoordinator]
 
 
+def _platforms(entry: MyTowerConfigEntry) -> list[Platform]:
+    platforms = [Platform.BUTTON, Platform.EVENT]
+    if entry.data.get(CONF_ENABLE_CAMERAS, True):
+        platforms.append(Platform.CAMERA)
+    return platforms
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: MyTowerConfigEntry) -> bool:
     """Set up MyTower from a config entry."""
     coordinator = MyTowerCoordinator(hass, entry)
     await coordinator.async_config_entry_first_refresh()
     entry.runtime_data = coordinator
 
-    platforms = [Platform.BUTTON]
-    if entry.data.get(CONF_ENABLE_CAMERAS, True):
-        platforms.append(Platform.CAMERA)
+    await hass.config_entries.async_forward_entry_setups(entry, _platforms(entry))
 
-    await hass.config_entries.async_forward_entry_setups(entry, platforms)
+    # Listen for intercom rings (read-only PubNub; no SIP, no app conflict).
+    coordinator.start_ring_listener()
+    entry.async_on_unload(coordinator.async_stop_ring_listener)
 
     if entry.data.get(CONF_ENABLE_GUESTS, True):
         await async_register_services(hass)
@@ -33,10 +40,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: MyTowerConfigEntry) -> b
 
 async def async_unload_entry(hass: HomeAssistant, entry: MyTowerConfigEntry) -> bool:
     """Unload a config entry."""
-    platforms = [Platform.BUTTON]
-    if entry.data.get(CONF_ENABLE_CAMERAS, True):
-        platforms.append(Platform.CAMERA)
-    unloaded = await hass.config_entries.async_unload_platforms(entry, platforms)
+    unloaded = await hass.config_entries.async_unload_platforms(
+        entry, _platforms(entry)
+    )
     if unloaded:
         async_unload_services(hass)
     return unloaded
