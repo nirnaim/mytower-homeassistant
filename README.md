@@ -59,15 +59,6 @@ GET  https://api.ecloud.akuvox.com/userinfo?token=<access_token>  → doors + ca
 POST https://api.ecloud.akuvox.com/opendoor?token=<access_token>  (mac, relay)  → open
 ```
 
-## Security note
-
-In the captured traffic, MyTower's Akuvox-config endpoint appeared to be keyed
-only by the numeric account id plus a constant header, with no per-user secret
-verified. If that is the whole check, residents' intercom credentials may be
-retrievable by id alone. This has **not** been tested against other accounts and
-should not be. It is worth reporting to MyTower; if they fix it, this
-integration's auth flow will need to change.
-
 ## Credentials & privacy
 
 Your device token and the derived Akuvox credentials stay in your Home Assistant
