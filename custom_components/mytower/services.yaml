@@ -1,0 +1,75 @@
+create_guest:
+  name: Create guest
+  description: Register a guest/visitor in MyTower.
+  fields:
+    name:
+      name: Name
+      description: Guest full name.
+      required: true
+      example: "Dana Cohen"
+      selector:
+        text:
+    phone:
+      name: Phone
+      description: Guest phone number.
+      example: "0501234567"
+      selector:
+        text:
+    car_number:
+      name: Car number
+      description: Vehicle plate, for gate access.
+      selector:
+        text:
+    passport:
+      name: ID / passport
+      selector:
+        text:
+    meeting_place:
+      name: Meeting place
+      selector:
+        text:
+    estimate_date:
+      name: Expected date
+      description: Expected arrival (as the app formats it, e.g. YYYY-MM-DD).
+      selector:
+        text:
+    due_to_date:
+      name: Valid until
+      selector:
+        text:
+    description:
+      name: Notes
+      selector:
+        text:
+    allow_gate:
+      name: Allow gate
+      description: Allow the guest through the vehicle gate.
+      default: true
+      selector:
+        boolean:
+    guest_type:
+      name: Guest type
+      description: MyTower guest-type code (advanced; leave blank for default).
+      selector:
+        text:
+    visitor_type:
+      name: Visitor type
+      description: MyTower visitor-type code (advanced).
+      selector:
+        text:
+
+delete_guest:
+  name: Delete guest
+  description: Remove a previously registered guest.
+  fields:
+    visitor_id:
+      name: Visitor ID
+      description: The visitorId returned when the guest was created.
+      required: true
+      selector:
+        text:
+    visitor_type:
+      name: Visitor type
+      default: "1"
+      selector:
+        text:

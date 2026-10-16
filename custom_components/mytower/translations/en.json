@@ -1,0 +1,24 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect MyTower",
+        "description": "Enter the MyTower device token and account id captured from the app. See the integration README for how to find them.",
+        "data": {
+          "device_token": "Device token (mt-mobile)",
+          "user_id": "Account id",
+          "enable_cameras": "Add door cameras",
+          "enable_guests": "Enable guest management service"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to MyTower.",
+      "invalid_auth": "The device token or account id was rejected.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This MyTower account is already set up."
+    }
+  }
+}

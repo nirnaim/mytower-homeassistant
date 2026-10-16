@@ -1,0 +1,14 @@
+# never publish captures, credentials, or VPN keys
+*.zip
+*wireguard*
+*.png
+*.jsonl
+*.jsonl.*
+*.creds
+*.mitm
+flows*
+mitmdump*.log
+__pycache__/
+*.pyc
+venv/
+ref/

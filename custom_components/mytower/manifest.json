@@ -1,0 +1,13 @@
+{
+  "domain": "mytower",
+  "name": "MyTower",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": ["stream"],
+  "documentation": "https://github.com/nir/mytower-homeassistant",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/nir/mytower-homeassistant/issues",
+  "requirements": ["cryptography>=41.0.0"],
+  "version": "0.1.0"
+}
